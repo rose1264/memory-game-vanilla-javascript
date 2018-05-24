@@ -1,6 +1,5 @@
-/*
- * Create a list that holds all of your cards
- */
+// Declare all variables;
+
 let cards = document.getElementsByClassName('card');
 let deck = document.querySelector('.deck');
 let shuffledCards = shuffle(cards);
@@ -14,12 +13,14 @@ let modalBody = document.querySelector('.modal-body');
 let timer = document.querySelector('#timer');
 let starNumber = 3;
 let matchedCount = 0;
+let clickedCards = 0;
 let modalHeaderMessage = '';
 let modalBodyMessage = '';
 let t, seconds, minutes;
 let time = '00:00'
 
 //score panel - star rate and moves
+
 moves.textContent = 0;
 
 function starRate() {
@@ -34,7 +35,7 @@ function starRate() {
 }
 
 function startTimer () {
-    clearInterval(t)
+
     t = setInterval(function () {
       timer.textContent = time;
       seconds++;
@@ -79,12 +80,13 @@ function newGame() {
 
   //reset moves;
   moves.textContent = 0;
+  clickedCards = 0;
 
   //reset timer;
+  clearInterval(t);
   seconds = 0;
   minutes = 0;
   timer.innerHTML = '00:00';
-  startTimer();
 
   //reset cards;
   for (let i = 0; i < shuffledCards.length; i++) {
@@ -129,6 +131,10 @@ let displayCard = function () {
 
 let openedCard = function () {
   openedCards.push(this);
+  clickedCards++;
+  if (clickedCards === 1) {
+    startTimer();
+  }
   if (openedCards.length === 2) {
     moves.textContent++;
     starRate();
