@@ -85,7 +85,7 @@ function unmatchCards() {
     openedCards[0].classList.remove('unmatch', 'open');
     openedCards[1].classList.remove('unmatch', 'open');
     openedCards = [];
-  }, 1000);
+  }, 350);
 }
 
 function matchedCards() {
