@@ -12,17 +12,14 @@ let thirdStar = document.querySelector('#thirdStar');
 let modal = document.querySelector('.modal');
 let modalHeader = document.querySelector('.modal-header');
 let modalBody = document.querySelector('.modal-body');
+let timer = document.querySelector('#timer');
 let starNumber = 3;
 let matchedCount = 0;
 let modalHeaderMessage = '';
 let modalBodyMessage = '';
+let t, seconds, minutes;
+let time = '00:00'
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 //score panel - star rate and moves
 moves.textContent = 0;
 
@@ -31,15 +28,33 @@ function starRate() {
     thirdStar.innerHTML = '<i class="fa fa-star-o"></i>';
     starNumber = 2;
   }
-  if (moves.textContent > 18 && moves.textContent <= 24) {
+  if (moves.textContent > 18) {
     secondStar.innerHTML = '<i class="fa fa-star-o"></i>';
     starNumber = 1;
   }
-  if (moves.textContent > 24) {
-    firstStar.innerHTML = '<i class="fa fa-star-o"></i>';
-    starNumber = 0;
-  }
 }
+
+function startTimer () {
+    clearInterval(t)
+    t = setInterval(function () {
+      timer.textContent = time;
+      seconds++;
+
+      if (seconds === 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes === 60) {
+          minutes = 0;
+          seconds = 0;
+        }
+      }
+      timer.textContent =
+        (minutes < 10 ? '0' + minutes.toString() : minutes) +
+        ':' +
+        (seconds < 10 ? '0' + seconds.toString() : seconds)
+    },
+    1000)
+  }
 
 // new game - helper functions
 
@@ -74,6 +89,10 @@ function newGame() {
     modalHeader.removeChild(modalHeaderMessage);
     modalBody.removeChild(modalBodyMessage);
   }
+  seconds = 0
+  minutes = 0
+  timer.innerHTML = '00:00'
+  startTimer();
 }
 
 // during game - toggle 'open' class
@@ -85,7 +104,7 @@ function unmatchCards() {
     openedCards[0].classList.remove('unmatch', 'open');
     openedCards[1].classList.remove('unmatch', 'open');
     openedCards = [];
-  }, 350);
+  }, 400);
 }
 
 function matchedCards() {
@@ -135,15 +154,3 @@ function endGame() {
     }
   }, 1000);
 }
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
