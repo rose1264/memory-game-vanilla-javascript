@@ -7,7 +7,11 @@ Clone or download ZIP of this repository on your local machine. Open 'index.html
 ## Game Instructions
 
 Keep revealing cards to remember each unveiled card.
-Match cards properly with less moves and in faster time
+Match cards properly with less moves and faster time.
+
+## Expectation of the Game
+
+Simple game with nice interface and much fun!
 
 ## Contributing
 

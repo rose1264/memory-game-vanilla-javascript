@@ -6,7 +6,6 @@ let deck = document.querySelector('.deck');
 let shuffledCards = shuffle(cards);
 let openedCards = [];
 let moves = document.querySelector('.moves');
-let firstStar = document.querySelector('#firstStar');
 let secondStar = document.querySelector('#secondStar');
 let thirdStar = document.querySelector('#thirdStar');
 let modal = document.querySelector('.modal');
@@ -74,25 +73,34 @@ function shuffle(array) {
 }
 
 function newGame() {
+  //reset stars;
+  secondStar.innerHTML = '<i class="fa fa-star"></i>';
+  thirdStar.innerHTML = '<i class="fa fa-star"></i>';
+
+  //reset moves;
+  moves.textContent = 0;
+
+  //reset timer;
+  seconds = 0;
+  minutes = 0;
+  timer.innerHTML = '00:00';
+  startTimer();
+
+  //reset cards;
   for (let i = 0; i < shuffledCards.length; i++) {
     deck.appendChild(shuffledCards[i]);
     shuffledCards[i].classList.remove('open', 'match', 'unmatch');
   }
-  moves.textContent = 0;
   openedCards = [];
-  firstStar.innerHTML = '<i class="fa fa-star"></i>';
-  secondStar.innerHTML = '<i class="fa fa-star"></i>';
-  thirdStar.innerHTML = '<i class="fa fa-star"></i>';
-  modal.style.display = 'none';
   matchedCount = 0;
+
+  //reset modal;
+  modal.style.display = 'none';
   if (modalHeaderMessage) {
     modalHeader.removeChild(modalHeaderMessage);
     modalBody.removeChild(modalBodyMessage);
   }
-  seconds = 0
-  minutes = 0
-  timer.innerHTML = '00:00'
-  startTimer();
+
 }
 
 // during game - toggle 'open' class
@@ -146,7 +154,7 @@ function endGame() {
       modalBodyMessage = document.createElement('p');
       modalHeaderMessage.innerHTML = '<h3>Congratulations! You Won!</h3>';
       modalBodyMessage.innerHTML =
-        `<p>With ${moves.textContent} Moves and ${starNumber} Stars.</p>
+        `<p>With ${moves.textContent} Moves, ${minutes} Minutes ${seconds} Seconds and ${starNumber} Stars.</p>
         <p>Woooooo!</p>`;
       modalHeader.appendChild(modalHeaderMessage);
       modalBody.appendChild(modalBodyMessage);
